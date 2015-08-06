@@ -35,5 +35,9 @@
   "Resource": {
     "dataSource": "db",
     "public": true
+  },
+  "archive": {
+    "dataSource": "db",
+    "public": true
   }
 }

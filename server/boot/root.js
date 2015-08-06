@@ -1,6 +1,11 @@
-module.exports = function(server) {
-  // Install a `/` route that returns server status
-  var router = server.loopback.Router();
-  router.get('/', server.loopback.status());
-  server.use(router);
+module.exports = function(app) {
+  var User = app.models.User;
+
+  User.create({username: 'admin', email: 'admin@alvar.com', password: 'opensesame'}, function(err, user) {
+      console.log(user);
+
+      User.login({username: 'admin', password: 'opensesame'}, function (err, accessToken){
+         console.log('access token: '+accessToken.id); 
+      });
+  });
 };
