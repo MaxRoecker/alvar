@@ -1,27 +1,32 @@
 {
-  "name": "archive",
+  "name": "Archive",
+  "plural": "Archives",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
     "size": {
       "type": "number",
       "required": true
     },
-    "mimeType": {
+    "type": {
       "type": "string",
       "required": true
     },
-    "value": {
+    "payload": {
       "type": "string",
-      "length":65536,
-      "required": true
+      "required": true,
+      "length": 8192
     }
   },
   "validations": [],
   "relations": {},
   "acls": [],
-  "methods": []
+  "methods": {}
 }

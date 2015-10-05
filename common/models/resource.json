@@ -13,13 +13,17 @@
     "description": {
       "type": "string",
       "required": true
+    },
+    "rating": {
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],
   "relations": {
-    "archives": {
+    "archive": {
       "type": "hasOne",
-      "model": "archive",
+      "model": "Archive",
       "foreignKey": ""
     }
   },
@@ -37,5 +41,5 @@
       "permission": "ALLOW"
     }
   ],
-  "methods": []
+  "methods": {}
 }
