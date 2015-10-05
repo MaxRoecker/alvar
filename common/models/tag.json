@@ -1,5 +1,6 @@
 {
-  "name": "Resource",
+  "name": "Tag",
+  "plural": "Tags",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -14,23 +15,18 @@
       "type": "string",
       "required": true
     },
-    "rating": {
-      "type": "number"
-    },
-    "tags": {
+    "synonyms": {
       "type": [
         "string"
       ]
+    },
+    "mutable": {
+      "type": "boolean",
+      "required": true
     }
   },
   "validations": [],
-  "relations": {
-    "archive": {
-      "type": "hasOne",
-      "model": "Archive",
-      "foreignKey": ""
-    }
-  },
+  "relations": {},
   "acls": [
     {
       "accessType": "WRITE",
