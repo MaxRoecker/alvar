@@ -6,19 +6,33 @@ module.exports = function(Resource) {
 
   Resource.searchDecs = function(search, cb) {
     var url = "http://decs.bvsalud.org/cgi-bin/mx/cgi=@vmx/decs/?words=" + search;
-    var requestOptions  = { encoding: null, method: "GET", uri: url};
+    var requestOptions = {
+      encoding: null,
+      method: "GET",
+      uri: url
+    };
     request(requestOptions, function(err, response, body) {
       var body = iconv.decode(new Buffer(body), "ISO-8859-1");
-      parseString(body,function(err,result){
+      parseString(body, function(err, result) {
         var decs = [];
         var responses = result.decsvmx.decsws_response;
-        responses.forEach(function (elem){
-          var aux = {};
-          aux.term = elem.tree[0].self[0].term_list[0].term[0]._;
-          aux.synonyms = elem.record_list[0].record[0].synonym_list[0].synonym;
-          decs.push(aux);
-        });
-        cb(null,decs);
+        if (responses) {
+          responses.forEach(function(elem) {
+            var aux = {};
+            var terms = [];
+            var descriptors = elem.record_list[0].record[0].descriptor_list[0].descriptor;
+            descriptors.forEach(function(d) {
+              var auxTerm = {};
+              var key = d.$.lang;
+              auxTerm[key] = d._;
+              terms.push(auxTerm);
+            });
+            aux.terms = terms;
+            aux.synonyms = elem.record_list[0].record[0].synonym_list[0].synonym;
+            decs.push(aux);
+          });
+        }
+        cb(null, decs);
       });
     });
   }
@@ -29,7 +43,7 @@ module.exports = function(Resource) {
         arg: 'search',
         type: 'string'
       },
-      returns : {
+      returns: {
         arg: 'result',
         type: 'object'
       },
