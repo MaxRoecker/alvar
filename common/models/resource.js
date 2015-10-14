@@ -32,6 +32,9 @@ module.exports = function(Resource) {
       returns : {
         arg: 'result',
         type: 'object'
+      },
+      http: {
+        verb: 'get'
       }
     }
   );
