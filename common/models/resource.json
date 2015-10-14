@@ -18,9 +18,7 @@
       "type": "number"
     },
     "tags": {
-      "type": [
-        "string"
-      ]
+      "type": "array"
     }
   },
   "validations": [],
