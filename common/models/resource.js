@@ -35,7 +35,7 @@ module.exports = function(Resource) {
         cb(null, decs);
       });
     });
-  }
+  };
 
   Resource.remoteMethod(
     'searchDecs', {

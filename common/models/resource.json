@@ -18,7 +18,7 @@
       "type": "number"
     },
     "tags": {
-      "type": "array"
+      "type": "string"
     }
   },
   "validations": [],
@@ -27,6 +27,11 @@
       "type": "hasOne",
       "model": "Archive",
       "foreignKey": ""
+    },
+    "tags": {
+      "type": "hasMany",
+      "model": "Tag",
+      "foreignKey": "tags"
     }
   },
   "acls": [
