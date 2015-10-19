@@ -19,13 +19,11 @@ module.exports = function(Resource) {
         if (responses) {
           responses.forEach(function(elem) {
             var aux = {};
-            var terms = [];
+            var terms = {};
             var descriptors = elem.record_list[0].record[0].descriptor_list[0].descriptor;
             descriptors.forEach(function(d) {
-              var auxTerm = {};
               var key = d.$.lang;
-              auxTerm[key] = d._;
-              terms.push(auxTerm);
+              terms[key] = d._;
             });
             aux.terms = terms;
             aux.synonyms = elem.record_list[0].record[0].synonym_list[0].synonym;
