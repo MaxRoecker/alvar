@@ -43,5 +43,9 @@
   "Tag": {
     "dataSource": "db",
     "public": true
+  },
+  "NoResultQuery": {
+    "dataSource": "db",
+    "public": true
   }
 }

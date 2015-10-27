@@ -50,4 +50,39 @@ module.exports = function(Resource) {
       }
     }
   );
+  Resource.afterRemote('find', function(context, remoteMethodOutput, next) {
+    if (remoteMethodOutput.length == 0) {
+      var filter = JSON.parse(context.args.filter);
+      var search = filter.where.name.like;
+      var NoResultQuery = Resource.app.models.NoResultQuery;
+      NoResultQuery.exists(search, function(err, exists) {
+        if (!exists) {
+          var noResult = {};
+          noResult['search'] = search;
+          noResult['created'] = new Date();
+          noResult['lastUpdate'] = new Date();
+          noResult['counter'] = 1;
+          NoResultQuery.create(noResult, function(err, models) {
+            if (err) {
+              return err;
+            }
+          });
+        } else {
+          NoResultQuery.findById(search, undefined, function(err, instance) {
+            if (err) {
+              return err;
+            }
+            instance.counter += 1;
+            instance.lastUpdate = new Date();
+            NoResultQuery.upsert(instance, function(err, i) {
+              if (err) {
+                return err;
+              }
+            });
+          });
+        }
+      });
+    }
+    next();
+  });
 };

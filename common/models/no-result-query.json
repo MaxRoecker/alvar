@@ -1,47 +1,32 @@
 {
-  "name": "Resource",
+  "name": "NoResultQuery",
+  "plural": "NoResultQueries",
   "base": "PersistedModel",
-  "idInjection": true,
+  "idInjection": false,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "name": {
+    "search": {
       "type": "string",
+      "id": true,
       "required": true
     },
-    "description": {
-      "type": "string",
+    "created": {
+      "type": "date",
       "required": true
     },
-    "rating": {
-      "type": "number"
+    "lastUpdate": {
+      "type": "date",
+      "required": true
     },
     "counter": {
-      "type": "number"
-    },
-    "tagsStringify": {
-      "type": "string"
+      "type": "number",
+      "required": true
     }
   },
   "validations": [],
-  "relations": {
-    "archive": {
-      "type": "hasOne",
-      "model": "Archive",
-      "foreignKey": ""
-    },
-    "tags": {
-      "type": "hasMany",
-      "model": "Tag",
-      "foreignKey": "tags"
-    },
-    "user": {
-      "type": "hasOne",
-      "model": "User",
-      "foreignKey": ""
-    }
-  },
+  "relations": {},
   "acls": [
     {
       "accessType": "WRITE",
