@@ -22,6 +22,12 @@
     },
     "tagsStringify": {
       "type": "string"
+    },
+    "creation": {
+      "type": "date",
+    },
+    "lastUpdate": {
+      "type": "date"
     }
   },
   "validations": [],
