@@ -89,4 +89,21 @@ module.exports = function(Resource) {
     }
     next();
   });
+
+
+  Resource.observe('before save', function (ctx, next) {
+    var currentTime = new Date();
+    if(ctx.instance){
+      if(ctx.isNewInstance){
+        ctx.instance["creation"] = currentTime;
+      }else{
+        delete ctx.instance["creation"];
+      };
+      ctx.instance["lastUpdate"] = currentTime;
+    }else{
+      delete ctx.data["creation"];
+      ctx.data["lastUpdate"] = currentTime;
+    }
+    next();
+  });
 };

@@ -2,5 +2,13 @@
   "db": {
     "name": "db",
     "connector": "memory"
+  },
+  "mysql": {
+    "name": "mysql",
+    "connector": "mysql",
+    "host": "localhost",
+    "user": "root",
+    "password": "root",
+    "database": "alvar"
   }
 }

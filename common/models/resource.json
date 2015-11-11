@@ -24,7 +24,7 @@
       "type": "string"
     },
     "creation": {
-      "type": "date",
+      "type": "date"
     },
     "lastUpdate": {
       "type": "date"
