@@ -51,39 +51,44 @@ module.exports = function(Resource) {
     }
   );
   Resource.afterRemote('find', function(context, remoteMethodOutput, next) {
-    if (remoteMethodOutput.length == 0) {
-      if (context.args.filter) {
-        var filter = JSON.parse(context.args.filter);
-        if(filter.where && filter.where.name && filter.where.name.like){
-          var search = filter.where.name.like;
-          var NoResultQuery = Resource.app.models.NoResultQuery;
-          NoResultQuery.exists(search, function(err, exists) {
-            if (!exists) {
-              var noResult = {};
-              noResult['search'] = search;
-              noResult['created'] = new Date();
-              noResult['lastUpdate'] = new Date();
-              noResult['counter'] = 1;
-              NoResultQuery.create(noResult, function(err, models) {
-                if (err) {
-                  return err;
-                }
-              });
-            } else {
-              NoResultQuery.findById(search, undefined, function(err, instance) {
-                if (err) {
-                  return err;
-                }
-                instance.counter += 1;
-                instance.lastUpdate = new Date();
-                NoResultQuery.upsert(instance, function(err, i) {
+      if (remoteMethodOutput.length == 0) {
+        if (context.args.filter) {
+          var filter = JSON.parse(context.args.filter);
+          if (filter.where) {
+            var or = filter.where.or.filter(function(item) {
+              return (item.name) ? true : false;
+            });
+            if (or[0].name && or[0].name.like) {
+            var search = or[0].name.like;
+            var NoResultQuery = Resource.app.models.NoResultQuery;
+            NoResultQuery.exists(search, function(err, exists) {
+              if (!exists) {
+                var noResult = {};
+                noResult['search'] = search;
+                noResult['created'] = new Date();
+                noResult['lastUpdate'] = new Date();
+                noResult['counter'] = 1;
+                NoResultQuery.create(noResult, function(err, models) {
                   if (err) {
                     return err;
                   }
                 });
-              });
-            }
-          });
+              } else {
+                NoResultQuery.findById(search, undefined, function(err, instance) {
+                  if (err) {
+                    return err;
+                  }
+                  instance.counter += 1;
+                  instance.lastUpdate = new Date();
+                  NoResultQuery.upsert(instance, function(err, i) {
+                    if (err) {
+                      return err;
+                    }
+                  });
+                });
+              }
+            });
+          }
         }
       }
     }
@@ -91,19 +96,19 @@ module.exports = function(Resource) {
   });
 
 
-  Resource.observe('before save', function (ctx, next) {
-    var currentTime = new Date();
-    if(ctx.instance){
-      if(ctx.isNewInstance){
-        ctx.instance["creation"] = currentTime;
-      }else{
-        delete ctx.instance["creation"];
-      };
-      ctx.instance["lastUpdate"] = currentTime;
-    }else{
-      delete ctx.data["creation"];
-      ctx.data["lastUpdate"] = currentTime;
-    }
-    next();
-  });
+Resource.observe('before save', function(ctx, next) {
+  var currentTime = new Date();
+  if (ctx.instance) {
+    if (ctx.isNewInstance) {
+      ctx.instance["creation"] = currentTime;
+    } else {
+      delete ctx.instance["creation"];
+    };
+    ctx.instance["lastUpdate"] = currentTime;
+  } else {
+    delete ctx.data["creation"];
+    ctx.data["lastUpdate"] = currentTime;
+  }
+  next();
+});
 };
