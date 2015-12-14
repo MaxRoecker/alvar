@@ -22,7 +22,9 @@
     "payload": {
       "type": "string",
       "required": true,
-      "length": 8192
+      "mysql":{
+        "dataType": "longtext"
+      }
     }
   },
   "validations": [],
