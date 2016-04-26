@@ -60,6 +60,7 @@ module.exports = function(Resource) {
             });
             if (or[0].name && or[0].name.like) {
             var search = or[0].name.like;
+            search = search.substring(1,search.length-1);
             var NoResultQuery = Resource.app.models.NoResultQuery;
             NoResultQuery.exists(search, function(err, exists) {
               if (!exists) {
