@@ -14,7 +14,7 @@
     ]
   },
   "User": {
-    "dataSource": "mysql"
+    "dataSource": "db"
   },
   "AccessToken": {
     "dataSource": "db",
@@ -33,19 +33,19 @@
     "public": false
   },
   "Resource": {
-    "dataSource": "mysql",
+    "dataSource": "db",
     "public": true
   },
   "Archive": {
-    "dataSource": "mysql",
+    "dataSource": "db",
     "public": true
   },
   "Tag": {
-    "dataSource": "mysql",
+    "dataSource": "db",
     "public": true
   },
   "NoResultQuery": {
-    "dataSource": "mysql",
+    "dataSource": "db",
     "public": true
   }
 }
